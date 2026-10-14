@@ -219,11 +219,24 @@ img { max-width: 100%; display: block; }
     padding: 2rem 0;
     background: var(--color-bg);
     box-shadow: 0 1px 0 var(--color-line);
-    transform: translateY(-120%);
-    transition: transform 0.35s ease;
+    /* Fully hidden when closed (not just slid up), so no edge peeks out */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.75rem);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s 0.25s;
   }
 
-  .nav__menu.is-open { transform: translateY(0); }
+  .nav__menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  /* Solid header while the menu is open, so it reads as one panel */
+  .site-header:has(.nav__menu.is-open) {
+    background: var(--color-bg);
+  }
 
   .nav__toggle[aria-expanded="true"] .nav__bar { background: transparent; }
   .nav__toggle[aria-expanded="true"] .nav__bar::before { transform: translateY(7px) rotate(45deg); }
